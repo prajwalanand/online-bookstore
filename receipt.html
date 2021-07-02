@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> CAMPUS MART </title>
+<link rel="stylesheet" href="styles.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js"></script>
+<script src="jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready();
+	xhr = new XMLHttpRequest();
+	function getReceipt()
+	{
+		xhr.onreadystatechange = populate;
+		document.getElementById("book").innerHTML = localStorage['transid'];
+		xhr.open("GET","http://localhost/seproject/receipt.php?user="+localStorage['user'],false);
+		xhr.send();
+	}
+	function populate()
+	{
+		if(xhr.readyState == 4 && xhr.status == 200)
+		{
+			tot = 0;
+			//alert(xhr.responseText);
+			row = xhr.responseText.split(";");
+			document.getElementById("usn").innerHTML = localStorage['user'];
+			for(var i = 0; i < row.length-1; i++)
+			{
+				details = row[i].split(",");
+				data = document.createElement("tr");
+				//cell0 = document.createElement("td");
+				//cell0.innerHTML = details[0];
+				//data.appendChild(cell0);
+				cell1 = document.createElement("td");
+				cell1.innerHTML = details[1];
+				data.appendChild(cell1);
+				cell2 = document.createElement("td");
+				cell2.innerHTML = details[2];
+				data.appendChild(cell2);
+				cell3 = document.createElement("td");
+				cell3.innerHTML = details[3];
+				data.appendChild(cell3);
+				document.getElementById("tab").appendChild(data);
+				tot = tot + parseInt(details[3]);	
+			}
+			document.getElementById("tot").innerHTML = tot;
+		}
+	}
+	<!-- $(function () { -->
+
+    <!-- var specialElementHandlers = { -->
+        <!-- '#editor': function (element,renderer) { -->
+            <!-- return true; -->
+        <!-- } -->
+    <!-- }; -->
+ <!-- $('#cmd').click(function () { -->
+        <!-- var doc = new jsPDF(); -->
+        <!-- doc.fromHTML( -->
+            <!-- $('#target').html(), 60, 10,  -->
+            <!-- { 'width': 500, 'elementHandlers': specialElementHandlers },  -->
+            <!-- function(){ doc.save(localStorage['user']+'.pdf'); } -->
+        <!-- ); -->
+
+    <!-- });   -->
+<!-- }); -->
+	
+</script>
+</head>
+
+
+<body onload="getReceipt()" id="target">
+	<center><img src="images/download.png" style="width:100px;height:100px;"></img></center>
+	<center><h1 style="color:darkblue;">PES CAMPUS MART</h1></center>
+	<center><h3>RECEIPT</h3></center>
+	<h4>Booking ID: <span id="book"></span></h4>
+	<b>USN: </b> <span id="usn"></span>
+	<br />
+	<h4>Items: </h4>
+	<table id="tab">
+	<tr style = "color:darkblue;">
+	<th>Item</th>
+	<th>Qty.</th>
+	<th>Price</th>
+	</tr>
+	</table>
+	<br />
+	<h5>Total: </h5><span id="tot"> </span><br />
+	<button type="button" onclick="window.print()">SAVE</button>
+	<br/>
+	<br/>
+	<a href="http://localhost/seproject/campus.html">Home</a>
+</body>
+</html>

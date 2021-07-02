@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ShopKeeper Portal</title>
+<style type="text/css">
+div {
+		position: absolute;
+		top: 40%;
+		left: 50%;
+		transform: translate(-50%,-50%);
+}
+.wrapper{
+		position:absolute;
+		top:30%;
+		left: 50%
+	}
+</style>
+<script type="text/javascript">
+function func(objButton){
+	val = objButton.value;
+	window.location.href="http://localhost/seproject/fwd/"+val+".html";
+}
+</script>
+</head>
+<body background="images/bck2.jpg">
+	<div class="wrapper">
+		<p><h1>Actions</h1></p>
+	</div>
+	<div>
+	<input type="button" id="add" name="add" value="Add" onclick="func(this)">
+	<input type="button" id="remove" name="remove" value="Remove" onclick="func(this)">
+	<input type="button" id="update" name="update" value="Update" onclick="func(this)">
+	<input type="button" id="xs" name="xstatus" value="Xerox" onclick="func(this)">
+	</div>
+</body>
+</html>

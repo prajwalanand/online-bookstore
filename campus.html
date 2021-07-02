@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script> 
+<title> CAMPUS MART </title>
+<style>
+	
+	.one {
+    font-family=Georgia;
+    font-size = 5px;
+	font-color = "SandyBrown";
+	}
+	.bg{
+	background-image:url("images/blue.jpg");
+	height:100%;
+	background-position:relative;
+	background-repeat:no-repeat;
+	background-size:cover;
+	}
+	
+</style>
+<script type="text/javascript">
+
+/*	
+if(localStorage['user']) //Regarding Xerox Status for Users
+{
+	userdiv = document.getElementById("XeroxStatus");
+	userdiv.innerHTML = "Xerox Status = "+localStorage.getItem('user');
+	document.body.appendChild(userdiv);
+}
+else
+{
+	
+}*/
+
+function init()
+{
+	if(localStorage['user'] == 'admin')
+	{
+		//document.getElementById("update").style.display = 'block';
+		//document.getElementById("add").style.display = 'block';
+		document.getElementById("opt").style.display = 'block';
+	}
+	else
+	{
+		document.getElementById("Xerox").style.display = 'block';
+	}
+	getStatus();
+}
+function getStatus()
+{
+	xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = showStatus;
+	xhr.open("GET", "http://localhost/seproject/getStatus.php?user="+localStorage['user'], true);
+	xhr.send();
+}
+function showStatus()
+{
+	if(this.status == 200 && this.readyState == 4)
+	{
+		str = this.responseText;
+		//alert(str);
+		if(str=="1")
+		{
+			document.getElementById("XeroxStatus").innerHTML = "Pending";
+			document.getElementById("XeroxStatus").style.color = "white";	
+			document.getElementById("XeroxStatus").style.backgroundColor = "red";	
+		}
+		else if(str == "0")
+		{
+			
+			document.getElementById("XeroxStatus").innerHTML = "Complete";
+			document.getElementById("XeroxStatus").style.color = "white";	
+			document.getElementById("XeroxStatus").style.backgroundColor = "green";
+		}
+		else
+		{
+			document.getElementById("XeroxStatus").innerHTML = "N.A.";
+			document.getElementById("XeroxStatus").style.color = "white";	
+			//document.getElementById("XeroxStatus").style.backgroundColor = "green";
+		}
+	}
+}
+function makeCall()
+{   document.getElementById("itemInfo").style.display="hidden";
+	var clean = document.getElementById("itemInfo").innerHTML="";
+	if(document.getElementById("stationary").checked)
+	{
+		
+	
+		var clean7 = document.getElementById("BookDiv").innerHTML="";
+	    var clean8 = document.getElementById("StationaryDiv").innerHTML="";
+		STATIONARY = document.getElementById("StationaryDiv");
+		p4 = document.createElement("p");
+		p4.id = "demo4";
+		p4.onclick=link4;
+		p4.innerHTML ="Scales";
+		p4.setAttribute("style","font-family : Georgia; font-size : 25px; font-weight : bolder;color:white");
+		p4.appendChild(document.createElement("br"));
+		
+		miniDiv4 = document.createElement("div");
+		miniDiv4.id="d4";
+		miniDiv4.setAttribute("style","font-family  : Georgia;  font-size : 18px; font-weight : 100");
+		
+		p4.appendChild(miniDiv4);
+		STATIONARY.appendChild(p4);
+		
+		p5 = document.createElement("p");
+		p5.id = "demo5";
+		p5.onclick=link5;
+		p5.innerHTML ="Note Books";
+		p5.setAttribute("style","font-family : Georgia; font-size : 25px; font-weight : bold;color:white");
+		p5.appendChild(document.createElement("br"));
+		
+		miniDiv5 = document.createElement("div");
+		miniDiv5.id="d5";
+		miniDiv5.setAttribute("style","font-family  : Georgia;  font-size : 18px; font-weight : 100");
+
+		p5.appendChild(miniDiv5);
+		STATIONARY.appendChild(p5);
+		
+		p6 = document.createElement("p");
+		p6.id = "demo6";
+		p6.onclick=link6;
+		p6.innerHTML ="Pens";
+		p6.setAttribute("style","font-family : Georgia; font-size : 25px; font-weight : bold;color:white");
+		p6.appendChild(document.createElement("br"));
+		
+		miniDiv6 = document.createElement("div");
+		miniDiv6.id="d6";
+		miniDiv6.setAttribute("style","font-family  : Georgia;  font-size : 18px; font-weight : 100");
+		
+		p6.appendChild(miniDiv6);
+		STATIONARY.appendChild(p6);
+		
+	}
+	
+	
+	else
+	{
+	
+		
+		
+		var clean7 = document.getElementById("BookDiv").innerHTML="";
+	    var clean8 = document.getElementById("StationaryDiv").innerHTML="";
+		BOOKDIV = document.getElementById("BookDiv");
+		p1 = document.createElement("p");
+		p1.id = "demo1";
+		p1.onclick=link1;
+		p1.innerHTML ="Engineering Books";
+		p1.setAttribute("style","font-family : Georgia; font-size : 25px; font-weight : bold;color:white");
+		p1.appendChild(document.createElement("br"));
+		
+		miniDiv1 = document.createElement("div");
+		miniDiv1.id="d1";
+		miniDiv1.setAttribute("style","font-family:Georgia;font-size: 18px;font-color:#A52A2A");
+		p1.appendChild(miniDiv1);
+		BOOKDIV.appendChild(p1);
+		
+		p2 = document.createElement("p");
+		p2.id = "demo2";
+		p2.onclick=link2;
+		p2.innerHTML ="Medical Books";
+		p2.setAttribute("style","font-family : Georgia; font-size : 25px; font-weight : bold;color:white");
+		p2.appendChild(document.createElement("br"));
+		
+		miniDiv2 = document.createElement("div");
+		miniDiv2.id="d2";
+		miniDiv2.setAttribute("style","font-family:Georgia;font-size: 18px;font-color:#A52A2A");
+		p2.appendChild(miniDiv2);
+		BOOKDIV.appendChild(p2);
+		
+		p3 = document.createElement("p");
+		p3.id = "demo3";
+		p3.onclick=link3;
+		p3.innerHTML ="Law Books";
+		p3.setAttribute("style","font-family : Georgia; font-size : 25px; font-weight : bold;color:white");
+		p3.appendChild(document.createElement("br"));
+		
+		miniDiv3 = document.createElement("div");
+		miniDiv3.id="d3";
+		miniDiv3.setAttribute("style","font-family:Georgia;font-size: 18px;font-color:#A52A2A");
+		p3.appendChild(miniDiv3);
+		BOOKDIV.appendChild(p3);
+		
+		
+		
+		
+	}
+	
+}
+
+function link1()
+{ 
+	
+    var clean3 = document.getElementById("d1").innerHTML="";
+	var clean1 = document.getElementById("d2").innerHTML="";
+    var clean2 = document.getElementById("d3").innerHTML="";
+	
+	
+	var div1 = document.getElementById("d1");
+	div1.setAttribute("style","margin-left: 30px");
+	var p1 = document.createElement("p");
+	p1.innerHTML = "Computer Science Books";
+	p1.id="cs";
+	p1.style.fontWeight="100";
+	p1.style.color="SandyBrown";
+	p1.onclick=getEnggBooks;
+	div1.appendChild(p1);
+	
+	var p2 = document.createElement("p"); 
+	p2.innerHTML = "Bio Technology Books";
+	p2.id="bt";
+	p2.style.fontWeight="100";
+	p2.style.color="SandyBrown";
+	p2.onclick=getEnggBooks;
+    div1.appendChild(p2);
+	
+	var p3 = document.createElement("p");
+	p3.innerHTML = "Civil Books";
+	p3.id="cv";
+	p3.style.fontWeight="100";
+	p3.style.color="SandyBrown";
+	p3.onclick=getEnggBooks;
+	div1.appendChild(p3);
+	
+	var p4 = document.createElement("p");
+	p4.innerHTML = "Mechanical Books";
+	p4.id="me";
+	p4.style.fontWeight="100";
+	p4.style.color="SandyBrown";
+	p4.onclick=getEnggBooks;
+	div1.appendChild(p4);
+	
+	var p5 = document.createElement("p");
+	p5.innerHTML = "Electrical Books";
+	p5.id="ee";
+	p5.style.fontWeight="100";
+	p5.style.color="SandyBrown";
+	p5.onclick=getEnggBooks;
+	div1.appendChild(p5);
+	demo1=document.getElementById("demo1");
+	demo1.appendChild(div1);
+	
+	 
+	
+	
+}
+
+function link2()
+{
+	var clean3 = document.getElementById("d1").innerHTML="";
+	var clean1 = document.getElementById("d2").innerHTML="";
+    var clean2 = document.getElementById("d3").innerHTML="";
+	
+	var div2 = document.getElementById("d2");
+	div2.setAttribute("style","margin-left: 30px");
+	<!-- <div class="list-group"> -->
+	var a1 = document.createElement("p");
+	a1.innerHTML = "Cardiology books";
+	a1.id="car";
+	a1.style.fontWeight="100";
+	a1.style.color="SandyBrown";
+	a1.onclick=getEnggBooks;
+	div2.appendChild(a1);
+	
+	var a2 = document.createElement("p");
+	a2.innerHTML = "Dental Books";
+	a2.id="de";
+	a2.style.fontWeight="100";
+	a2.style.color="SandyBrown";
+	a2.onclick=getEnggBooks;
+	div2.appendChild(a2);
+	
+	var a3 = document.createElement("p");
+	a3.innerHTML = "Human Anatomy Books";
+	a3.id="an";
+	a3.style.fontWeight="100";
+	a3.style.color="SandyBrown";
+	a3.onclick=getEnggBooks;
+	div2.appendChild(a3);
+	
+	var a4 = document.createElement("p");
+	a4.innerHTML = "Psychology Books";
+	a4.id="psy";
+	a4.style.fontWeight="100";
+	a4.style.color="SandyBrown";
+	a4.onclick=getEnggBooks;
+	div2.appendChild(a4);
+	
+	var a5 = document.createElement("p");
+	a5.innerHTML = "Pharmacology Books";
+	a5.id="pm";
+	a5.style.fontWeight="100";
+	a5.style.color="SandyBrown";
+	a5.onclick=getEnggBooks;
+	div2.appendChild(a5);
+	demo2 = document.getElementById("demo2");
+	demo2.appendChild(div2);
+	
+	
+	
+	
+}
+
+function link3()
+{
+	var clean3 = document.getElementById("d1").innerHTML="";
+	var clean1 = document.getElementById("d2").innerHTML="";
+    var clean2 = document.getElementById("d3").innerHTML="";
+	
+	var div3 = document.getElementById("d3");
+	div3.setAttribute("style","margin-left: 30px");
+	
+	var a1 = document.createElement("p");
+	a1.innerHTML = "Constitutional Law Books";
+	a1.id="cl";
+	a1.style.fontWeight="100";
+	a1.style.color="SandyBrown";
+	a1.onclick=getEnggBooks;
+	div3.appendChild(a1);
+	
+	var a2 = document.createElement("p");
+	a2.innerHTML = "Tax Law Books";
+	a2.id="tl";
+	a2.style.fontWeight="100";
+	a2.style.color="SandyBrown";
+	a2.onclick=getEnggBooks;
+	div3.appendChild(a2);
+	
+	var a3 = document.createElement("p");
+	a3.innerHTML = "Criminal Law Books";
+	a3.id="cr";
+	a3.style.fontWeight="100";
+	a3.style.color="SandyBrown";
+	a3.onclick=getEnggBooks;
+	div3.appendChild(a3);
+	
+	var a4 = document.createElement("p");
+	a4.innerHTML = "Labour and Industrial  Books";
+	a4.id="li";
+	a4.style.fontWeight="100";
+	a4.style.color="SandyBrown";
+	a4.onclick=getEnggBooks;
+	div3.appendChild(a4);
+	
+	demo3=document.getElementById("demo3");
+	demo3.appendChild(div3);
+	 
+	
+	
+	
+	
+}
+
+
+function link4() //types of scales
+{ 
+	
+    var clean4 = document.getElementById("d4").innerHTML="";
+	var clean5 = document.getElementById("d5").innerHTML="";
+    var clean6 = document.getElementById("d6").innerHTML="";
+	
+	
+	var div4 = document.getElementById("d4");
+	div4.setAttribute("style","margin-left: 30px");
+	
+	var a1 = document.createElement("p");
+	a1.innerHTML = "Plane Scales";
+	a1.id="pscale";
+	a1.style.fontWeight="100";
+	a1.style.color="SandyBrown";
+	a1.onclick=getStat;
+	div4.appendChild(a1);
+	
+	var a2 = document.createElement("p");
+	a2.innerHTML = "Diagonal Scales";
+	a2.id="dscale";
+	a2.style.fontWeight="100";
+	a2.style.color="SandyBrown";
+	a2.onclick=getStat;
+	div4.appendChild(a2);
+	
+	var a3 = document.createElement("p");
+	a3.innerHTML = "Vernier Scales";
+	a3.id="vscale";
+	a3.style.fontWeight="100";
+	a3.style.color="SandyBrown";
+	a3.onclick=getStat;
+	div4.appendChild(a3);
+	
+	
+	var a4 = document.createElement("p");
+	a4.innerHTML = "Chord Scales";
+	a4.id="cscales";
+	a4.style.fontWeight="100";
+	a4.style.color="SandyBrown";
+	a4.onclick=getStat;
+	div4.appendChild(a4);
+	 
+	 
+	 demo4=document.getElementById("demo4");
+	 demo4.appendChild(div4);
+	
+	 
+	
+	
+}
+
+function link5()
+{
+	var clean4 = document.getElementById("d4").innerHTML="";
+	var clean5 = document.getElementById("d5").innerHTML="";
+    var clean6 = document.getElementById("d6").innerHTML="";
+	
+	var div5 = document.getElementById("d5");
+	div5.setAttribute("style","margin-left: 30px");
+	
+	var a1 = document.createElement("p");
+	a1.innerHTML = "Long Unruled Notebooks";
+	a1.id="lunrule";
+	a1.style.fontWeight="100";
+	a1.style.color="SandyBrown";
+	a1.onclick=getStat;
+	div5.appendChild(a1);
+	
+	var a2 = document.createElement("p");
+	a2.innerHTML = "Long Ruled Notebooks";
+	a2.id="lrule";
+	a2.style.fontWeight="100";
+	a2.style.color="SandyBrown";
+	a2.onclick=getStat;
+	div5.appendChild(a2);
+	
+	var a3 = document.createElement("p");
+	a3.innerHTML = "Short Unruled Notebooks";
+	a3.id="sunrule";
+	a3.style.fontWeight="100";
+	a3.style.color="SandyBrown";
+	a3.onclick=getStat;
+	div5.appendChild(a3);
+	
+	var a4 = document.createElement("p");
+	 
+	a4.innerHTML = "Blue Books";
+	a4.id="bbooks";
+	a4.style.fontWeight="100";
+	a4.style.color="SandyBrown";
+	a4.onclick=getStat;
+	div5.appendChild(a4);
+	
+	var a5 = document.createElement("p");
+	a5.innerHTML = "Spiral Notebooks";
+	a5.id="spiral";
+	a5.style.fontWeight="100";
+	a5.style.color="SandyBrown";
+	a5.onclick=getStat;
+	div5.appendChild(a5);
+	
+	demo5 = document.getElementById("demo5");
+	demo5.appendChild(div5);
+	
+	
+	
+	
+}
+
+function link6()
+{
+	var clean5 = document.getElementById("d5").innerHTML="";
+	var clean4 = document.getElementById("d4").innerHTML="";
+    var clean6 = document.getElementById("d6").innerHTML="";
+	
+	var div6 = document.getElementById("d6");
+	div6.setAttribute("style","margin-left: 30px");
+	
+	var a1 = document.createElement("p");
+	a1.innerHTML = "Ink Pens";
+	a1.id="ipens";
+	a1.style.fontWeight="100";
+	a1.style.color="SandyBrown";
+	a1.onclick=getStat;
+	div6.appendChild(a1);
+	  
+	var a2 = document.createElement("p");
+	a2.innerHTML = "Ball Pens";
+	a2.id="bpens";
+	a2.style.fontWeight="100";
+	a2.style.color="SandyBrown";
+	a2.onclick=getStat;
+	div6.appendChild(a2);
+	
+	var a3 = document.createElement("p");
+	a3.innerHTML = "Gel Pens";
+	a3.id="gpens";
+	a3.style.fontWeight="100";
+	a3.style.color="SandyBrown";
+	a3.onclick=getStat;
+	div6.appendChild(a3);
+	
+	var a4 = document.createElement("p");
+	a4.innerHTML = "Whitener";
+	a4.id="white";
+	a4.style.fontWeight="100";
+	a4.style.color="SandyBrown";
+	a4.onclick=getStat;
+	div6.appendChild(a4);
+	demo6=document.getElementById("demo6");
+	demo6.appendChild(div6);
+	 
+	
+	
+	
+	
+}
+
+function getEnggBooks(e)
+{       document.getElementById("itemInfo").style.display="block";
+		xhr1=new XMLHttpRequest();
+		//item = document.getElementById("item");
+		xhr1.onreadystatechange=viewEnggBooks;
+		xhr1.open("GET","http://localhost/seproject/common.php?item="+e.target.id,true);
+		xhr1.send();
+}
+
+function viewEnggBooks()
+{
+	if(xhr1.readyState==4 && xhr1.status == 200)
+	{   document.getElementById("itemInfo").style.display="block";
+		var clean = document.getElementById("itemInfo").innerHTML='';
+		searchResult=document.getElementById("itemInfo");
+		result = xhr1.responseText.split(",");
+		//alert(result);
+		var i;
+		var size = result.length;
+		for(i=0;i<size;i++)
+		{
+		 
+		 
+				
+			//searchResult.appendChild(p3);
+			p = document.createElement("a");
+			p.innerHTML = result[i];
+			var data = p.innerHTML;
+			p.href="http://localhost/seproject/itempage.html";
+			br1 = document.createElement("br");
+			br2 = document.createElement("br");
+			br3 = document.createElement("br");
+			searchResult.appendChild(br1);
+			searchResult.appendChild(br2);
+			searchResult.appendChild(br3);
+			p.onclick = function(e)
+			{
+				//alert('click!!');
+				localStorage["name"]=e.target.innerHTML;
+				alert(localStorage['name']);
+			}
+			searchResult.appendChild(p);
+			
+			//searchResult.appendChild(document.createElement("br"));
+		}
+		
+	}
+}
+
+function getStat(e)
+{
+	localStorage["name"]=e.target.innerHTML;
+	alert(localStorage['name']);
+	window.location.href = "http://localhost/seproject/itempage.html";
+}
+
+function logout()
+{
+	localStorage['user'] = "";
+}
+</script>
+</head>
+
+
+<body class="bg" onload="init()">
+<a href="http://localhost/seproject/login.html" onclick="logout()" class="btn btn-danger" style="position:absolute;right:15px;"><span class="glyphicon glyphicon-log-out"></span>Logout</a>
+<br/><br/>
+<a href="http://localhost/seproject/viewCart.html" class="btn btn-primary" style="position:absolute;right:15px;"><span class="glyphicon glyphicon-log-out"></span>View Cart</a>
+<br/><br/><br/>
+<!-- <a id="update" href="http://localhost/seproject/fwd/update.html" style="position:absolute;right:15px;display:none;color:white;">Update Database</a><br /> -->
+<!-- <a id="add" href="http://localhost/seproject/fwd/add.html" style="position:absolute;right:15px;display:none;color:white;">Add Items to Database</a><br /> -->
+<a id="opt" href="http://localhost/seproject/options.html" style="position:absolute;right:15px;display:none;color:white;">Edit Database</a><br />
+<div id="Xerox" style="display:none;"><b style="color:white;font-size:18px;font-family:Georgia;">Xerox Status: <b><span id = "XeroxStatus"></span></div>
+
+<label style="color:white;font-size:25px; font-family:Georgia"> Item Type: </label>&nbsp
+<label style="color:white;font-size:25px; font-family:Georgia"> Stationery  <input type="radio" id="stationary" name="iTYPE" value="stationary" checked="checked"/> </label>
+&nbsp
+<label style="color:white;font-size:25px; font-family:Georgia"> Books <input type="radio" id="books" name="iTYPE" value="books"/><br> </label>
+
+<br> <br>
+<button style="margin-left:150px" type="button" class = "btn btn-primary" value="Submit" onclick="makeCall()">Submit</button>
+<div id="itemInfo"style="overflow:scroll;display:none;border: 4px solid black; height:500px;width:500px;position:absolute;top:50px;right:200px;background-color:LightCyan"></div><br>
+<!--
+<p id = "demo1" onclick = "link1()"> Engineering Books </p> <br> <br>
+<div id = "d1"></div>
+<p id="demo2"onclick="link2()"> Medical Books </p> <br> <br>
+<div id = "d2"></div>
+<p id="demo3"onclick="link3()"> Law Books </p> <br> <br>
+<div id = "d3"></div>
+-->
+
+<div id = "BookDiv"></div>
+<div id = "StationaryDiv"></div>
+
+</body>
+</html>

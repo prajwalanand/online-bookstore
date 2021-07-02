@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script> 
+<title>Item</title>
+<style>
+	
+	.one {
+    font-family=Georgia;
+    font-size = 5px;
+	font-color = "SandyBrown";
+	}
+	.bg{
+	background-image:url("images/blue.jpg");
+	height:100%;
+	background-position:relative;
+	background-repeat:no-repeat;
+	background-size:cover;
+	}
+	
+</style>
+<script type="text/javascript">
+obj = {
+	logout: function()
+	{
+		localStorage['user'] = "";
+	}
+}
+</script>
+</head>
+<body class="bg">
+<div style="margin-top:100px;">
+<center><h3 style="color:white;">What do you want to do?</h3></center>
+<br />
+<br />
+<br />
+<center>
+<a href="http://localhost/seproject/fwd/update.html">
+				<button type="button" class="btn btn-primary">Update Database</button></a>&nbsp&nbsp
+<a href="http://localhost/seproject/fwd/add.html">
+				<button type="button" class="btn btn-primary">Add Items</button></a>&nbsp&nbsp
+<a href="http://localhost/seproject/fwd/remove.html">
+				<button type="button" class="btn btn-primary">Remove Item</button></a>&nbsp&nbsp
+				<a href="http://localhost/seproject/fwd/xerox.html">
+				<button type="button" class="btn btn-primary">Xerox</button></a>
+					<button type="button" class="btn btn-primary">Remove Item</button></a>&nbsp&nbsp
+				<a href="http://localhost/seproject/fwd/removeUser.html">
+				<button type="button" class="btn btn-primary">Remove Reservation</button></a>
+</center>
+</div>
+<br/><br/>
+<center><a href="http://localhost/seproject/campus.html">Back to Search</a></center>
+</body>
+</html>

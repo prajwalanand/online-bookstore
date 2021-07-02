@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Shopkeeper Portal</title>
+<script type="text/javascript">
+function remove(){
+	cat=document.getElementById("category");
+	category=cat.options[cat.selectedIndex].value;
+	code=document.getElementById("code");
+	iname=document.getElementById("iname");
+
+	//Create an XHR object to prepare to make an AJAX call
+	xhr=new XMLHttpRequest();
+	
+	//Register the callback for accepting response from the server
+	xhr.onreadystatechange=result;
+	//open connection
+	xhr.open("GET","http://localhost/seproject/fwd/remove.php?category="+category+"&code="+code.value+"&name="+iname.value,true);
+	//Make the request
+	xhr.send();
+}
+function result(){
+	if(xhr.readyState==4 && xhr.status==200){
+		result=xhr.responseText;
+		alert(result);
+	}
+
+}
+</script>
+</head>
+<style>
+input[type=text], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=submit] {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+div {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+	width: 30%;
+	margin:0 auto;
+}
+</style>
+
+<body>
+
+<h1 align="center">Shopkeeper Portal</h1>
+
+<div>
+	<h4 align="center">Item Removal</h4>
+
+    <label>Category</label>
+    <select id="category" name="category">
+      <option value="books">Books</option>
+      <option value="stationary">Stationary</option>
+    </select>
+	
+	<label>ID</label>
+    <input type="text" id="code" name="code" placeholder="Item ID..">
+	<label>Name</label>
+    <input type="text" id="iname" name="iname" placeholder="Item Name..">
+	
+  
+    <input type="button" value="Submit" onclick="remove()">
+
+</div>
+<br/><br/>
+<center><a href="http://localhost/seproject/options.html">Back to Options</a></center>
+</body>
+</html>

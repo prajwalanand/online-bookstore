@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Cart</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script> 
+<style type="text/css">
+	td { border: 1px solid white; }
+	.bg{
+	background-image:url("images/blue.jpg");
+	height:100%;
+	background-position:relative;
+	background-repeat:no-repeat;
+	background-size:cover;
+	}
+	table {
+		border: 1px solid white;
+		color: white;
+		width: 500px;
+		
+	}
+</style>
+<script type="text/javascript">
+obj = {
+	user: "",
+	xhr: new XMLHttpRequest(),
+	getDetails: function()
+	{
+		this.user = localStorage['user'];
+		this.xhr.onreadystatechange = this.printDetails;
+		this.xhr.open("GET", "http://localhost/seproject/getCart.php?user="+this.user, true);
+		this.xhr.send();
+	},
+	printDetails: function()
+	{
+		if(this.readyState == 4 && this.status == 200)
+		{
+			document.getElementById("table").innerHTML = "<thead><td>Item</td><td>Quantity</td><td>Amount</td></thead>";
+			result = this.responseText;
+			rows = result.split(';');
+			for(var i=0;i<rows.length-1;i++)
+			{
+				values = rows[i].split(',');
+				newrow = document.createElement("tr");
+				for(var j=0;j<values.length-1;j++)
+				{
+					d = document.createElement("td");
+					d.innerHTML = values[j];
+					newrow.appendChild(d);
+				}
+				removeItem = document.createElement("p");
+				removeItem.innerHTML = "<u id=\""+values[0]+","+values[1]+"\">Remove Item</u>";
+				removeItem.style = "color:red";
+				removeItem.onclick = function()
+				{
+					xhrnew = new XMLHttpRequest();
+					xhrnew.onreadystatechange = function(event)
+					{
+						if(this.readyState == 4 && this.status == 200)
+						{
+							alert(this.responseText);
+							obj.getDetails();
+						}
+					};
+					info = event.target.id.split(',');
+					xhrnew.open("GET", "http://localhost/seproject/removeItem.php?user=" + obj.user + "&item=" + info[0] + "&qty=" + info[1], true);
+					xhrnew.send();
+				};
+				d = document.createElement("td");
+				d.appendChild(removeItem);
+				newrow.appendChild(d);
+				document.getElementById("table").appendChild(newrow);
+			}
+		}
+	},
+	setAmount: function()
+	{
+		this.xhr.onreadystatechange = this.saveTotal;
+		this.xhr.open("GET", "http://localhost/seproject/getAmount.php?user="+this.user, true);
+		this.xhr.send();
+	},
+	saveTotal: function()
+	{
+		if(this.readyState == 4 && this.status == 200)
+		{
+			localStorage['amount'] = this.responseText;
+		}
+	},
+	setAmount1: function()
+	{
+		this.xhr.onreadystatechange = this.saveTotal;
+		this.xhr.open("GET", "http://localhost/seproject/getAmount.php?user="+this.user, true);
+		this.xhr.send();
+	},
+	saveTotal1: function()
+	{
+		if(this.readyState == 4 && this.status == 200)
+		{
+			localStorage['amount'] = this.responseText;
+			obj.updateReserved(this.responseText);
+		}
+	},
+	updateReserved: function(e)
+	{
+		this.xhr.onreadystatechange = this.showStatus;
+		this.xhr.open("GET", "http://localhost/seproject/addToReserved.php?user="+this.user+"&amt="+e, true);
+		this.xhr.send();
+	},
+	showStatus: function()
+	{
+	},
+	logout: function()
+	{
+		localStorage['user'] = "";
+	}
+}
+</script>
+</head>
+<body class="bg" onload="obj.getDetails()">
+<!-- <a href="http://localhost/seproject/login.html" onclick="obj.logout()" style="position:absolute;right:15px;">Logout</a> -->
+<a href="http://localhost/seproject/login.html" onclick="logout()" class="btn btn-danger" style="position:absolute;right:15px;"><span class="glyphicon glyphicon-log-out"></span>Logout</a>
+
+<center><h1 style="color:white">Your Cart</h1></center>
+<br />
+<center>
+<table id="table">
+<thead>
+<td>Item</td><td>Quantity</td><td>Amount</td><td></td>
+</thead>
+</table>
+</center>
+<br/>
+<center>
+<a href="http://localhost/seproject/itempage.html"><button type="button" class="btn btn-primary">Return to Item</button></a>
+
+<a onclick="obj.setAmount()" href="http://localhost/seproject/payment.html"><button type="button" class="btn btn-primary">Proceed to Checkout</button></a>
+
+<a onclick="obj.setAmount1()" href="http://localhost/seproject/reserve.html"><button type="button" class="btn btn-primary">Reserve</button></a>
+</center>
+<body>
+</html>

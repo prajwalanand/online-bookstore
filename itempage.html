@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script> 
+<title>Item</title>
+<style>
+	
+	.one {
+    font-family=Georgia;
+    font-size = 5px;
+	font-color = "SandyBrown";
+	}
+	.bg{
+	background-image:url("images/blue.jpg");
+	height:100%;
+	background-position:relative;
+	background-repeat:no-repeat;
+	background-size:cover;
+	}
+	
+</style>
+<script type="text/javascript">
+obj = {
+	user: "",
+	item: "",
+	author: "",
+	qty: 1,
+	rate: 0,
+	available: 30,
+	xhr: new XMLHttpRequest(),
+	init: function()
+	{
+		this.user = localStorage['user'];
+		this.item = localStorage['name'];
+		document.getElementById('h1').innerHTML = this.item;
+		this.xhr.onreadystatechange = this.getRate;
+		this.xhr.open("GET", "http://localhost/seproject/getRate.php?item="+this.item, true);
+		this.xhr.send();
+	},
+	getRate: function()
+	{
+		if(this.readyState == 4 && this.status == 200)
+		{
+			data = this.responseText.split(',');
+			obj.rate = parseInt(data[1]);
+			obj.available = parseInt(data[2]);
+			obj.author = data[0];
+			document.getElementById("price").innerHTML = "Price: "+obj.rate;
+			if(obj.user == "admin")
+			{
+				document.getElementById("ID").innerHTML = "Item ID: "+data[3];
+				document.getElementById("avail").innerHTML = "Available Quantity: "+obj.available;
+				document.getElementById("h5").style.display="none";
+				document.getElementById("available").style.display="none";
+				document.getElementById("addtocart").style.display="none";
+				document.getElementById("viewcart").style.display="none";
+			}
+			if(obj.author != 'none')
+				document.getElementById("h3").innerHTML = obj.author;
+			if(obj.available == 0)
+			{
+				document.getElementById("h5").innerHTML = "Out of Stock";
+				document.getElementById("h5").style.color = "white";
+				document.getElementById("h5").style.backgroundColor = "red";
+				document.getElementById("h5").style.height = 10;
+			}
+			else
+			{
+				if(obj.available > 5)
+				{
+					document.getElementById("h5").innerHTML = "Available";
+					document.getElementById("h5").style.color = "white";
+					document.getElementById("h5").style.backgroundColor = "green";
+					document.getElementById("h5").style.height = 10;
+				}
+				else
+				{
+					document.getElementById("h5").innerHTML = "Running out!";
+					document.getElementById("h5").style.color = "white";
+					document.getElementById("h5").style.backgroundColor = "gold";
+					document.getElementById("h5").style.height = 10;
+				}
+			}
+		}
+	},
+	addItem: function()
+	{
+		obj.qty = document.getElementById("qty").value;
+		if(obj.qty > this.available)
+			alert("Out of Stock");
+		else
+		{
+			amt = obj.rate * obj.qty;
+			this.xhr.onreadystatechange = this.getResponse;
+			this.xhr.open("GET", "http://localhost/seproject/addToCart.php?user="+this.user+"&item="+this.item+"&qty="+this.qty+"&amt="+amt, true);
+			this.xhr.send();
+		}
+	},
+	getResponse: function()
+	{
+		if(this.readyState == 4 && this.status == 200)
+		{
+			alert(this.responseText);
+		}
+	},
+	logout: function()
+	{
+		localStorage['user'] = "";
+	}
+}
+</script>
+</head>
+<body class="bg" onload="obj.init()">
+<a href="http://localhost/seproject/login.html" onclick="logout()" class="btn btn-danger" style="position:absolute;right:15px;"><span class="glyphicon glyphicon-log-out"></span>Logout</a>
+<h1 align="center" id="ID" style="color:white;font-size:30px; font-family:Georgia"></h1>
+<h1 align="center" id="h1" style="color:white;font-size:30px; font-family:Georgia"></h1>
+<h3 align="center" id="h3" style="color:white;font-size:25px; font-family:Georgia"></h2>
+<h5 align="center" id="price" style="color:white;font-size:25px; font-family:Georgia"></h5>
+<h5 align="center" id="avail" style="color:white;font-size:25px; font-family:Georgia"></h5>
+<div align="center" id="h5"></div>
+<br />
+<center id="available"><label style="color:white;font-size:18px; font-family:Georgia">Quantity<select id="qty" class="form-control"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label></center>
+<br /><center id="addtocart"><button onclick="obj.addItem()" class="btn btn-primary">Add to Cart</button></center>
+<br/>
+<center>
+<a href="http://localhost/seproject/viewCart.html">
+				<button id="viewcart" type="button" class="btn btn-primary">View Cart</button></a>
+<a href="http://localhost/seproject/campus.html">
+				<button type="button" class="btn btn-primary">Return to Search</button></a>
+</center>	
+</body>
+</html>

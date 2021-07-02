@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>LOGIN</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<script type="text/javascript" src="jquery.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script> 
+<style type="text/css">
+	.logo {
+	  padding: 15px 0;
+	  font-size: 25px;
+	  color: silver;
+	  font-weight: bold;
+	}
+ .center-block {
+	width:500px;
+	height:400px;
+	padding:20px;
+	color:cyan;
+	margin-left:35%;
+	margin-bottom:50%;
+	margin-top:5%;
+	margin-right:25%;
+	<!-- background-image:url("images/books.jpg"); -->
+	background-repeat:no-repeat;
+	background-size: 500px 500px;
+	}
+	body{
+		background-image:url("images/lib.jpg");
+	background-repeat:no-repeat;
+	background-size: 100% 100%;
+	}
+</style>
+<script type="text/javascript">
+function change(){
+	//Get username and password
+	usr=document.getElementById("usr");
+	pwd=document.getElementById("pwd");
+	npwd=document.getElementById("npwd");
+	//Create an XHR object to prepare to make an AJAX call
+	xhr=new XMLHttpRequest();
+	
+	//Register the callback for accepting response from the server
+	xhr.onreadystatechange=result;
+	//open connection
+	xhr.open("GET","http://localhost/seproject/changepwd.php?usr="+usr.value+"&pwd="+pwd.value+"&npwd="+npwd.value,true);
+	//Make the request
+	xhr.send();
+}
+function result(){
+	if(xhr.readyState==4 && xhr.status==200){
+		//We got the response. We need to update the electives drop-down
+		//Assuming electives came as a string(;seperated)
+		//alert(xhr.responseText);
+		alert("Password Changed!!!");
+		//window.location.assign("localhost:81/anu/home.php");
+		window.location.href="http://localhost/seproject/campus.html";
+		//alert(result);
+	}
+
+}
+</script>
+</head>
+<body>
+<div>
+		<h1 ><marquee style="background-image:url(images/stationary.jpg),url(images/stationary1.jpg),url(images/image.jpg);
+		background-repeat:no-repeat,no-repeat,no-repeat;
+		background-position: left top, right top, top;background-size:500px 150px,500px 150px,500px 150px;
+		color:grey;font-family:Monotype Corsiva;height:100px;font-size:60px;padding:25px">Online Campus Mart</marquee></h1>
+		<!-- <div class="row"> -->
+			<!-- <div class="center-block"> -->
+				<!-- <h1>LOGIN</h1> -->
+				<!-- <p> -->
+				<!-- <label>USERNAME:<br/><input type="text" id="usr"></input></label></br> -->
+				<!-- </p> -->
+				<!-- <p> -->
+				<!-- <label>OLD PASSWORD:<br/><input type="password" id="pwd"></input></label></br> -->
+				<!-- </p> -->
+				<!-- <p> -->
+				<!-- <label>NEW PASSWORD:<br/><input type="password" id="npwd"></input></label></br> -->
+				<!-- </p> -->
+				<!-- <p> -->
+				<!-- <a href="#" id="redir"> -->
+				<!-- <button type="button" class="btn btn-primary" value="CHANGE PASSWORD" onclick="login()">Confirm</button> -->
+				<!-- </a> -->
+				
+				<!-- </p> -->
+			<!-- </div> -->
+		<!-- </div> -->
+		<div class="center-block">
+	<div class="text-center" style="padding:10px 0">
+	<div class="logo">Change Password</div>
+	<!-- Main Form -->
+	<div class="login-form-1">
+		<form id="login-form" class="text-left">
+			<div class="login-form-main-message"></div>
+			<div class="main-login-form">
+				<div class="login-group">
+					<div class="form-group">
+						<label for="lg_username" class="sr-only">Username</label>
+						<input type="text" class="form-control" id="usr" name="lg_username" placeholder="Username">
+					</div>
+					<div class="form-group">
+						<label for="lg_password" class="sr-only">Old Password</label>
+						<input type="password" class="form-control" id="pwd" name="lg_password" placeholder="Old password">
+					</div>
+					<div class="form-group">
+						<label for="nlg_password" class="sr-only">New Password</label>
+						<input type="password" class="form-control" id="npwd" name="nlg_password" placeholder="New password">
+					</div>
+					
+				</div>
+				<center>
+				<a href="#" id="redir">
+				<button type="button" class="btn btn-primary" onclick="change()">Confirm</button></a>
+			</center>
+			</div>
+		</form>
+	</div></div>
+	<!-- end:Main Form -->
+</div>
+	</div>
+</body>
+</html>

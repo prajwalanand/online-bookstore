@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>LOGIN</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<script type="text/javascript" src="jquery.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script> 
+<style type="text/css">
+	.logo {
+	  padding: 15px 0;
+	  font-size: 25px;
+	  color: silver;
+	  font-weight: bold;
+	}
+
+	 .center-block {
+		width:500px;
+		height:350px;
+		padding:20px;
+		color:cyan;
+		margin-left:35%;
+		margin-bottom:50%;
+		margin-top:5%;
+		margin-right:25%;
+		<!-- background-image:url("images/books.jpg"); -->
+		background-repeat:no-repeat;
+		background-size: 500px 500px;
+		
+		}
+	body{
+		background-image:url("images/lib.jpg");
+		background-repeat:no-repeat;
+		background-size: 100% 100%;
+		}
+	.login{
+		margin-left:35%;
+		height:50px;
+		width:500px;
+		margin-right:25%;
+		background-color:#029f5b;
+	}
+</style>
+<script type="text/javascript">
+	xhr = new XMLHttpRequest();
+function login(){
+	//Get username and password
+			userbox = document.getElementById("usr");
+			user = userbox.value;
+			//userbox.value = "";
+			passbox = document.getElementById("pwd");
+			pass = passbox.value;
+			//passbox.value = "";
+			if((user == "") || (pass == ""))
+			{
+				
+			}
+			else
+			{
+				xhr.onreadystatechange = result;
+				xhr.open("POST", "http://localhost/seproject/pwd.php", false);
+				xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				xhr.send("usr="+user+"&pwd="+pass);
+			}
+}
+function result(){
+	if(xhr.readyState == 4 && xhr.status == 200)
+			{
+				var data = xhr.responseText.split(',');
+				if(data[0] == 1)
+				{
+					//out = document.getElementById("stat");
+					//out.innerHTML = "Login successful!<br/>";
+					//out.style.color = "blue";
+					localStorage['user'] = data[1];
+					//out.innerHTML += "Click <a href=\"HomePage.html\"> here</a> to continue";
+					document.getElementById("redir").href="http://localhost/seproject/campus.html";
+				}
+				else
+				{
+					alert("Failed");
+				}
+			}
+
+}
+</script>
+</head>
+<body>
+<div>
+		<h1><marquee style="background-image:url(images/stationary.jpg),url(images/stationary1.jpg),url(images/image.jpg);background-repeat:no-repeat,no-repeat,no-repeat;background-position:left top, right top, top;background-size:500px 150px,500px 150px,500px 150px;color:black;font-family:Monotype Corsiva;height:100px;font-size:60px;padding:25px">Online Campus Mart</marquee></h1>
+		<!-- <div class="panel-group"> -->
+		<!-- <div class="panel panel-success"> -->
+		<!-- <div class="panel-heading">Login</div> -->
+			<!-- <div class="panel-body"> -->
+			
+
+			<!-- <div class="center-block"> -->
+				<!-- <h1>LOGIN</h1></br> -->
+				<!-- <p> -->
+				<!-- <label>USERNAME:<br/><input type="text" id="usr"></input></label></br> -->
+				<!-- </p> -->
+				<!-- <p> -->
+				<!-- <label>PASSWORD:<br/><input type="password" id="pwd"></input></label></br> -->
+				<!-- </p> -->
+				<!-- <p> -->
+				<!-- <a href="#" id="redir"> -->
+				<!-- <button type="button" class="btn btn-primary" value="LOGIN" onclick="login()">Login</button> -->
+				<!-- </a> -->
+				<!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+				<!-- <a href="changepwd.html" class="btn btn-primary" value="CHANGE" style="color:white">Change Password</a> -->
+				<!-- </p> -->
+				<!-- <!-- </div> --> 
+			 <!-- <!-- </div>  --> 
+			<!-- <!-- </div> --> 
+		<!-- <!-- </div> --> 
+	<!-- </div> -->
+	<div class="center-block">
+	<div class="text-center" style="padding:10px 0">
+	<div class="logo">Login</div>
+	<!-- Main Form -->
+	<div class="login-form-1">
+		<form id="login-form" class="text-left">
+			<div class="login-form-main-message"></div>
+			<div class="main-login-form">
+				<div class="login-group">
+					<div class="form-group">
+						<label for="lg_username" class="sr-only">Username</label>
+						<input type="text" class="form-control" id="usr" name="lg_username" placeholder="Username">
+					</div>
+					<div class="form-group">
+						<label for="lg_password" class="sr-only">Password</label>
+						<input type="password" class="form-control" id="pwd" name="lg_password" placeholder="Password">
+					</div>
+					
+				</div>
+				<center>
+				<a href="#" id="redir">
+				<button type="button" class="btn btn-primary" onclick="login()">Login</button></a>
+			</center><center>
+			<div class="etc-login-form" style="color:white">
+				<a href="changepwd.html">Change Password</a></p>
+				
+			</div></center>
+			</div>
+		</form>
+	</div></div>
+	<!-- end:Main Form -->
+</div>
+
+	</div>
+</body>
+</html>
